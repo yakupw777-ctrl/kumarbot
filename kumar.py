@@ -188,7 +188,26 @@ async def admin_give_balance(message: types.Message):
         await message.answer("⚠ Lütfen ID ve miktar kısımlarına sadece sayı girin!")
 
 
-# --- BOTU BAŞLATMA (HER ZAMAN EN ALTTA KALMALI) ---
-if __name__ == "__main__":
+# --- BOTU BAŞLATMA (HER ZAMAN EN ALTTA KALMALI) ---# --- ÜCRETSİZ RENDER İÇİN WEB SUNUCUSU ---
+from aiohttp import web
+
+async def handle(request):
+    return web.Response(text="Bot aktif ve 7/24 calisiyor!")
+
+async def main():
     init_db()
-    dp.run_polling(bot)
+    
+    # Web sunucusunu arka planda başlatıyoruz
+    app = web.Application()
+    app.router.add_get('/', handle)
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, '0.0.0.0', 10000)
+    await site.start()
+    
+    # Botu başlatıyoruz
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())
