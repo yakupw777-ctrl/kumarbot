@@ -188,7 +188,7 @@ async def admin_give_balance(message: types.Message):
         await message.answer("⚠ Lütfen ID ve miktar kısımlarına sadece sayı girin!")
 
 
-# --- BOTU BAŞLATMA (HER ZAMAN EN ALTTA KALMALI) ---# --- ÜCRETSİZ RENDER İÇİN WEB SUNUCUSU ---
+# --- ÜCRETSİZ RENDER İÇİN WEB SUNUCUSU ---
 from aiohttp import web
 
 async def handle(request):
